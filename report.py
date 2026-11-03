@@ -3,8 +3,22 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import sys
+import os
 
-filename = '2026-10.csv'
+if len(sys.argv) > 1:
+  first_param = sys.argv[1]
+else:
+  print("No arguments provided.")
+  sys.exit(1)
+
+if os.path.isfile(first_param):
+  filename = first_param
+else:
+  print("Invalid file.")
+  sys.exit(1)
+
+print(f"Reading file: {filename}")
 df = pd.read_csv(filename)
 
 # Convert to datetime and set as index
@@ -23,18 +37,3 @@ ax.xaxis.set_major_locator(mdates.DayLocator(interval=1))
 # Format the labels (e.g., "Jan 01")
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %d'))
 plt.show()
-
-#dataframe["DATE"] = pd.to_datetime(dataframe['DATE'], format="%Y-%m-%d")
-
-#fig, ax = plt.subplots()
-#ax.plot(dataframe["DATE"], dataframe["MINUTES"])
-#ax.plot(dataframe["DATE"], dataframe["TMIN"])
-#fig.autofmt_xdate()
-#fig.show()
-
-# generate graph from tally CSV
-
-# total number of outages
-# duration of outages (uptime %)
-# longest continuous block
-# average time between outages
